@@ -1,10 +1,10 @@
 <?php
 session_start();
 if(!isset($_SESSION['username']))
-    {
-      session_destroy();
-      header("Location: error.php");
-    }
+{
+  session_destroy();
+  header("Location: error.php");
+}
 require 'connect.php';
 $id = $_GET['id'];
 $s_date = $_GET['s_date'];
@@ -15,85 +15,85 @@ $e_date = $_GET['e_date'];
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-        <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet"></link>
-        <link href="css/AnimatingSymbols.css" rel="stylesheet"></link>
-        <link rel="stylesheet" href="font-awesome-4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.indigo-pink.min.css">
-        <script defer src="https://code.getmdl.io/1.2.0/material.min.js"></script>
-        <!--<link href="MDB-Free/css/mdb.min.css" rel="stylesheet">-->
-        <title>Animating Symbols</title>
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+  <link href="css/AnimatingSymbols.css" rel="stylesheet"></link>
+  <link rel="stylesheet" href="font-awesome-4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.2.0/material.min.js"></script>
+  <!--<link href="MDB-Free/css/mdb.min.css" rel="stylesheet">-->
+  <title>Animating Symbols</title>
 
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-          
-      <script>
-          $(document).ready(function() {
-            $("#datepickerTo").datepicker({ dateFormat: "yy-mm-dd" });
-          });
-      </script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      $("#datepickerTo").datepicker({ dateFormat: "yy-mm-dd" });
+    });
+  </script>
 
-      <script>
-          $(document).ready(function() {
-            $("#datepickerFrom").datepicker({ dateFormat: "yy-mm-dd" });
-          });
-      </script>
+  <script>
+    $(document).ready(function() {
+      $("#datepickerFrom").datepicker({ dateFormat: "yy-mm-dd" });
+    });
+  </script>
 
-      <script>
-        $(document).ready(function () {
-        $('.dropdown-toggle').dropdown();
-          });
-      </script>
+  <script>
+    $(document).ready(function () {
+      $('.dropdown-toggle').dropdown();
+    });
+  </script>
 
-      <!-- Start and End dates -->
-      <?php
-        $result = mysqli_query($bd,"SELECT start_date FROM project WHERE id=".$id);
-        $locations = array();
-        while($row = mysqli_fetch_array($result)) {
-         array_push($locations, $row);
-           $start_date=strtotime($locations[0][0]);
-         }
-         $result = mysqli_query($bd,"SELECT end_date FROM project WHERE id=".$id);
-        $locations = array();
-        while($row = mysqli_fetch_array($result)) {
-         array_push($locations, $row);
-           $end_date=strtotime($locations[0][0]);
-         }
-     ?>
+  <!-- Start and End dates -->
+  <?php
+  $result = mysqli_query($bd,"SELECT start_date FROM project WHERE id=".$id);
+  $locations = array();
+  while($row = mysqli_fetch_array($result)) {
+   array_push($locations, $row);
+   $start_date=strtotime($locations[0][0]);
+ }
+ $result = mysqli_query($bd,"SELECT end_date FROM project WHERE id=".$id);
+ $locations = array();
+ while($row = mysqli_fetch_array($result)) {
+   array_push($locations, $row);
+   $end_date=strtotime($locations[0][0]);
+ }
+ ?>
 
-      <script>
+ <script>
 
-      var start_value = <?php echo json_encode($start_date,JSON_NUMERIC_CHECK); ?>;
-      var end_value = <?php echo json_encode($end_date,JSON_NUMERIC_CHECK); ?>;
+  var start_value = <?php echo json_encode($start_date,JSON_NUMERIC_CHECK); ?>;
+  var end_value = <?php echo json_encode($end_date,JSON_NUMERIC_CHECK); ?>;
 
       // console.log(start_value);
       // console.log(end_value);
 
-        $(function() {
+      $(function() {
         $("#slider").slider({
           max: 200,
           min: 0,
           change: function(event, ui) {
-          for(var i = 0;i < lineArray.length; i++){
-          console.log("ui.value=" + ui.value);
-          line111 = lineArray[i];
-          var icons = line111.get('icons');
-          icons[0].offset = (ui.value / 2) + '%';
-          line111.set('icons', icons);
+            for(var i = 0;i < lineArray.length; i++){
+              console.log("ui.value=" + ui.value);
+              line111 = lineArray[i];
+              var icons = line111.get('icons');
+              icons[0].offset = (ui.value / 2) + '%';
+              line111.set('icons', icons);
+            }
           }
-          }
-          });
         });
-      </script>
+      });
+    </script>
 
 
 
@@ -101,94 +101,94 @@ $e_date = $_GET['e_date'];
 
   <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
-     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-          <div class="navbar-header">
-           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-           <span class="sr-only">Toggle navigation</span>
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-           </button>
-           <a class="navbar-brand" href="#" style="font-size: 25px;">S.A.T.</a>
-          </div>
-         <div id="navbar" class="collapse navbar-collapse">
-           <ul class="nav navbar-nav navbar-right">
-             <li><a href="pageafterlogin.php">Home</a></li>
-             <li><a href="http://techithon.in">Contact</a></li>
-             <li><a href="logout.php">Logout</a></li>
-           </ul>
-          </div><!--/.nav-collapse -->
-        </div>
+   <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+         <span class="sr-only">Toggle navigation</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </button>
+       <a class="navbar-brand" href="#" style="font-size: 25px;">S.A.T.</a>
      </div>
+     <div id="navbar" class="collapse navbar-collapse">
+       <ul class="nav navbar-nav navbar-right">
+         <li><a href="pageafterlogin.php">Home</a></li>
+         <li><a href="http://techithon.in">Contact</a></li>
+         <li><a href="logout.php">Logout</a></li>
+       </ul>
+     </div><!--/.nav-collapse -->
+   </div>
+ </div>
 
-   <div class="container">
-    <div class="headingAndDescription">
-      <?php
+ <div class="container">
+  <div class="headingAndDescription">
+    <?php
     $result = mysqli_query($bd,"SELECT model_reference FROM project WHERE id=".$id);
     $locations = array();
     while($row = mysqli_fetch_array($result)) {
-        array_push($locations, $row);
-        echo "<h2>" . $locations[0][0] . "</h2>";
+      array_push($locations, $row);
+      echo "<h2>" . $locations[0][0] . "</h2>";
     }
     ?>
-    </div>
-   </div>           
+  </div>
+</div>           
 
 
 
-  <!-- 1st ROW -->
-    <div class="container">
-     <h3>Project Details</h3>
-     <hr class="hrRow" id="lineHr1"></hr>
-     <div class="row" id="row1">
-      <div class="col-md-3">
-        <h4>Project Number:</h4>
-        <?php
-        $result = mysqli_query($bd,"SELECT id FROM project WHERE id=".$id);
-        $locations = array();
-        while($row = mysqli_fetch_array($result)) {
-         array_push($locations, $row);
-           echo "<p>" . $locations[0][0] . "</p>";
-         }
-     ?>
-      </div>
-      <div class="col-md-3">
-        <h4>From Date:</h4>
-        <p>
-        <?php
-        $result = mysqli_query($bd,"SELECT start_date FROM project WHERE id=".$id);
-        $locations = array();
-        while($row = mysqli_fetch_array($result)) {
-         array_push($locations, $row);
-           echo "<p>" . $locations[0][0] . "</p>";
-           $start_date=strtotime($locations[0][0]);
-         }
-     ?>
-      </div>
-      <div class="col-md-3">
-        <h4>To Date:</h4>
-              <?php
-        $result = mysqli_query($bd,"SELECT end_date FROM project WHERE id=".$id);
-        $locations = array();
-        while($row = mysqli_fetch_array($result)) {
-         array_push($locations, $row);
-           echo "<p>" . $locations[0][0] . "</p>";
-           $end_date=strtotime($locations[0][0]);
-         }
-     ?>
-      </div>
-      <div class="col-md-3">
-       <h4>Duration:</h4>
-<?php
+<!-- 1st ROW -->
+<div class="container">
+ <h3>Project Details</h3>
+ <hr class="hrRow" id="lineHr1"></hr>
+ <div class="row" id="row1">
+  <div class="col-md-3">
+    <h4>Project Number:</h4>
+    <?php
+    $result = mysqli_query($bd,"SELECT id FROM project WHERE id=".$id);
+    $locations = array();
+    while($row = mysqli_fetch_array($result)) {
+     array_push($locations, $row);
+     echo "<p>" . $locations[0][0] . "</p>";
+   }
+   ?>
+ </div>
+ <div class="col-md-3">
+  <h4>From Date:</h4>
+  <p>
+    <?php
+    $result = mysqli_query($bd,"SELECT start_date FROM project WHERE id=".$id);
+    $locations = array();
+    while($row = mysqli_fetch_array($result)) {
+     array_push($locations, $row);
+     echo "<p>" . $locations[0][0] . "</p>";
+     $start_date=strtotime($locations[0][0]);
+   }
+   ?>
+ </div>
+ <div class="col-md-3">
+  <h4>To Date:</h4>
+  <?php
+  $result = mysqli_query($bd,"SELECT end_date FROM project WHERE id=".$id);
+  $locations = array();
+  while($row = mysqli_fetch_array($result)) {
+   array_push($locations, $row);
+   echo "<p>" . $locations[0][0] . "</p>";
+   $end_date=strtotime($locations[0][0]);
+ }
+ ?>
+</div>
+<div class="col-md-3">
+ <h4>Duration:</h4>
+ <?php
 
-      $interval = $end_date - $start_date;
-      echo "<p>" . $interval/3600 . "</p>";
-     ?>
-      </div>
-     </div>
-    </div>
-   </div>
+ $interval = $end_date - $start_date;
+ echo "<p>" . $interval/3600 . "</p>";
+ ?>
+</div>
+</div>
+</div>
+</div>
 <script type="text/javascript">
 	
 	function printfun()
@@ -204,12 +204,12 @@ $e_date = $_GET['e_date'];
 	}
 
 </script>
-    <!-- 2nd ROW -->
-  <div class="container" id="form">
+<!-- 2nd ROW -->
+<div class="container" id="form">
   
-    <h3>Filters</h3>
-    <hr class="hrRow" id="lineHr2"></hr>
-    <div class="row" id="row2">
+  <h3>Filters</h3>
+  <hr class="hrRow" id="lineHr2"></hr>
+  <div class="row" id="row2">
     <form class="form-signin" method="post" action="newlog.php">
       <div class="col-md-4">
         <h4 class="form-signin-heading">From Date:</h4>
@@ -222,103 +222,79 @@ $e_date = $_GET['e_date'];
       <div class="col-md-4 submit">
         <p><a class="btn btn-default" role="button" onclick="printfun()">Submit</a></p>
       </div>
-      </form>
-        <!--<div class="col-md-4">
-          <h4>View:</h4>
-          <div class="btn-group">
-          <button type="button" class="btn btn-default">Action</button>
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="#">This Week</a></li>
-            <li><a href="#">This Month</a></li>
-            <li><a href="#">This Year</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-        </div>
-        </div>-->
-    </div>
+    </form>
   </div>
+</div>
 
-    <div class="container">
-      <hr class="hrRow" id="lineHr3"></hr>
-      <h3>Map with our complete Route System:</h3>
-    <!--Play button-->
-    <div class="control">
-      <a class="btn btn-default btn-sm play control" alt="Play" title="Play">
+<div class="container">
+  <hr class="hrRow" id="lineHr3"></hr>
+  <h3>Map with our complete Route System:</h3>
+  <!--Play button-->
+  <div class="control">
+    <a class="btn btn-default btn-sm play control" alt="Play" title="Play">
       <i class="fa fa-play fa-lg" aria-hidden="true"></i></a>
     </div>
     <!--Pause button-->
     <div class="control">
       <a class="btn btn-default btn-sm pause control" alt="Pause" title="Pause" style="display:none;">
-      <i class="fa fa-pause fa-lg" aria-hidden="true"></i></a>
-    </div>
-    <!--Reset and Stop button-->
-    <div class="control">
-      <a class="btn btn-default btn-sm reset control" alt="Restart" title="Restart">
-      <i class="fa fa-repeat fa-lg" aria-hidden="true"></i></a>
-    </div>
-    <!--Fast Forward and Reach End button-->
-    <div class="control">
-      <a class="btn btn-default btn-sm end control" alt="Reach End" title="Reach End">
-      <i class="fa fa-fast-forward fa-lg" aria-hidden="true"></i></a>
-    </div>    
-
-      <div style= "padding: 5px;">
-      <div id="slider"></div>
+        <i class="fa fa-pause fa-lg" aria-hidden="true"></i></a>
       </div>
-      <!--<div id="slider" class="mdl-slider mdl-js-slider slider control" type="range"
-        min="0" max="100" value="0" tabindex="0"></div>-->
+      <!--Reset and Stop button-->
+      <div class="control">
+        <a class="btn btn-default btn-sm reset control" alt="Restart" title="Restart">
+          <i class="fa fa-repeat fa-lg" aria-hidden="true"></i></a>
+        </div>
+        <!--Fast Forward and Reach End button-->
+        <div class="control">
+          <a class="btn btn-default btn-sm end control" alt="Reach End" title="Reach End">
+            <i class="fa fa-fast-forward fa-lg" aria-hidden="true"></i></a>
+          </div>    
 
-<!--<button type="button" class="play">Play</button>
-      <input type="button" value="updateBar()" onclick="updateBar()" />
-      <input type="button" value="hide()" onclick="hide()" />-->
+          <div style= "padding: 5px;">
+            <div id="slider"></div>
+          </div>
+        </div>
+        <div class="container" id="map"></div>
 
-    </div>
-    <div class="container" id="map"></div>
+        <footer>
+          <div class="container" id="bottom">
+            <p style="display:inline-block;">&copy;Scheduling Animation Tool</p>
+            <p style="display:inline-block; float:right;"><input type="checkbox" id="nightMode">NightMode</p>
+          </div>
+        </footer>
 
-    <footer>
-      <div class="container" id="bottom">
-        <p style="display:inline-block;">&copy;Scheduling Animation Tool</p>
-        <p style="display:inline-block; float:right;"><input type="checkbox" id="nightMode">NightMode</p>
-      </div>
-    </footer>
+        <?php
+        $sqlqry = "SELECT * FROM ship WHERE id=" . $id . " AND start_date BETWEEN '" . $s_date . "' AND '" . $e_date . "'";
+        $result = mysqli_query($bd, $sqlqry);
+        $locations = array();
+        $counter=0;
+        while($row = mysqli_fetch_array($result)) {
+          array_push($locations, $row);
+        }
+        $nrows = mysqli_num_rows($result);
+        ?>
+        <?php
+        $result = mysqli_query($bd,"SELECT * FROM mother_ship WHERE id=".$id);
+        $m_ship = array();
+        while($row = mysqli_fetch_array($result)) {
+          array_push($m_ship, $row);
+        }
+        $m_ship_rows = mysqli_num_rows($result);
+        ?>
 
-    <?php
-    $sqlqry = "SELECT * FROM ship WHERE id=" . $id . " AND start_date BETWEEN '" . $s_date . "' AND '" . $e_date . "'";
-    $result = mysqli_query($bd, $sqlqry);
-    $locations = array();
-    $counter=0;
-    while($row = mysqli_fetch_array($result)) {
-        array_push($locations, $row);
-    }
-    $nrows = mysqli_num_rows($result);
-?>
-<?php
-    $result = mysqli_query($bd,"SELECT * FROM mother_ship WHERE id=".$id);
-    $m_ship = array();
-    while($row = mysqli_fetch_array($result)) {
-        array_push($m_ship, $row);
-    }
-    $m_ship_rows = mysqli_num_rows($result);
-?>
-
-    <script>
+        <script>
 
 //Initialization Of Data From DB
-    var nrows = <?php echo json_encode($nrows,JSON_NUMERIC_CHECK);?>;
-    var locMatrix = <?php echo json_encode($locations,JSON_NUMERIC_CHECK);?>;
-    var m_ship_rows = <?php echo json_encode($m_ship_rows,JSON_NUMERIC_CHECK);?>;
-    var m_ship = <?php echo json_encode($m_ship,JSON_NUMERIC_CHECK);?>;
+var nrows = <?php echo json_encode($nrows,JSON_NUMERIC_CHECK);?>;
+var locMatrix = <?php echo json_encode($locations,JSON_NUMERIC_CHECK);?>;
+var m_ship_rows = <?php echo json_encode($m_ship_rows,JSON_NUMERIC_CHECK);?>;
+var m_ship = <?php echo json_encode($m_ship,JSON_NUMERIC_CHECK);?>;
 
-      var line;
-      var line1;
-      var lineArray = [];
-      var lineArray1 = [];
-      var DrivePath = [];
+var line;
+var line1;
+var lineArray = [];
+var lineArray1 = [];
+var DrivePath = [];
       // This example adds an animated symbol to a polyline.
 
       function initMap() {
@@ -326,20 +302,14 @@ $e_date = $_GET['e_date'];
         var intervalForAnimation;
         var count = 0;
         var n = 2;
-        // var DrivePath = [
-        //   new google.maps.LatLng(37.772323, -122.214897),
-        //   new google.maps.LatLng(21.291982, -157.821856),
-        //   new google.maps.LatLng(-18.142599, 178.431),
-        //   new google.maps.LatLng(-27.46758, 153.027892),
-        //   new google.maps.LatLng(12.97918167,   77.6449),
-        // ];
+        
         for(var i=0;i<=nrows-1;i++)
         {
-        console.log(DrivePath[i]);
-        DrivePath.push(new google.maps.LatLng(locMatrix[i][1], locMatrix[i][2]),
-                  new google.maps.LatLng(17.8674, 66.543),
-                  new google.maps.LatLng(locMatrix[i][3], locMatrix[i][4]));
-      }
+          console.log(DrivePath[i]);
+          DrivePath.push(new google.maps.LatLng(locMatrix[i][1], locMatrix[i][2]),
+            new google.maps.LatLng(17.8674, 66.543),
+            new google.maps.LatLng(locMatrix[i][3], locMatrix[i][4]));
+        }
         var Colors = [
         "#FF0000", 
         "#00FF00", 
@@ -356,31 +326,31 @@ $e_date = $_GET['e_date'];
           center: {lat: 19.0760, lng: 72.8777},
           zoom: 5,
           styles: [
-            {
-              featureType: 'all',
-              stylers: [
-                { saturation: -80 }
-              ]
-            },{
-              featureType: 'road.arterial',
-              elementType: 'geometry',
-              stylers: [
-                { hue: '#00ffee' },
-                { saturation: 50 }
-              ]
-            },{
-              featureType: 'poi.business',
-              elementType: 'labels',
-              stylers: [
-                { visibility: 'off' }
-              ]
-            }
+          {
+            featureType: 'all',
+            stylers: [
+            { saturation: -80 }
+            ]
+          },{
+            featureType: 'road.arterial',
+            elementType: 'geometry',
+            stylers: [
+            { hue: '#00ffee' },
+            { saturation: 50 }
+            ]
+          },{
+            featureType: 'poi.business',
+            elementType: 'labels',
+            stylers: [
+            { visibility: 'off' }
+            ]
+          }
           ]
         });
 
         // Define the symbol, using one of the predefined paths ('CIRCLE')
         // supplied by the Google Maps JavaScript API.
-          var symbolSource = {
+        var symbolSource = {
           path: 'M -2,-2 2,2 M 2,-2 -2,2',
           strokeColor: '#FF0000',
           strokeWeight: 4
@@ -404,25 +374,28 @@ $e_date = $_GET['e_date'];
           strokeOpacity: 1.0,
           center: {lat: 8.8674, lng: 90.543}
         };
-
-        // Create the polyline and add the symbol to it via the 'icons' property.
-        /*line = new google.maps.Polyline({
-          path: [{lat: -33.918861, lng: 18.423300}, {lat: -35.842160, lng: 18.863525}, {lat: -39.170387, lng: 35.189209}, {lat: -26.331494, lng: 54.228516}, {lat: 0.462885, lng: 61.083984}, {lat: 19.075984, lng: 72.877656}],
-          icons: [
+        
+        for (var i = 0; i < DrivePath.length-1; i++) {
+          var line = new google.maps.Polyline({
+            path: [DrivePath[i], DrivePath[i+1]],
+            icons: [
             {
               icon: symbolShape,
               offset: '0%'
             }
-          ],
-          strokeColor: '#0000FF ',
-          strokeOpacity: 0,
-          map: map
-        });*/
+            ],
+            strokeColor: Colors[i],
+            strokeOpacity: 0.0,
+            strokeWeight: 2,
+            map: map
+          });
+          lineArray[i] = line;
+        }
 
-        //Our Secondary polyline for reseting purpose
-        /*var line1 = new google.maps.Polyline({
-          path: [{lat: -33.918861, lng: 18.423300}, {lat: -35.842160, lng: 18.863525}, {lat: -39.170387, lng: 35.189209}, {lat: -26.331494, lng: 54.228516}, {lat: 0.462885, lng: 61.083984}, {lat: 19.075984, lng: 72.877656}],
-          icons: [
+        for (var i = 0; i < DrivePath.length-1; i++) {
+          line1 = new google.maps.Polyline({
+            path: [DrivePath[i], DrivePath[i+1]],
+            icons: [
             {
               icon: symbolSource,
               offset: '0%'
@@ -430,85 +403,51 @@ $e_date = $_GET['e_date'];
               icon: symbolDestination,
               offset: '100%'
             }
-          ],
-          strokeColor: '#0000FF ',
-          strokeOpacity: 0.8,
-          map: map
-        });*/
+            ],
+            strokeColor: Colors[i],
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map
+          });
+          lineArray1[i] = line1;
+        }
 
-          for (var i = 0; i < DrivePath.length-1; i++) {
-              var line = new google.maps.Polyline({
-              path: [DrivePath[i], DrivePath[i+1]],
-              icons: [
-                {
-                  icon: symbolShape,
-                  offset: '0%'
-                }
-              ],
-              strokeColor: Colors[i],
-              strokeOpacity: 0.0,
-              strokeWeight: 2,
-              map: map
-            });
-             lineArray[i] = line;
-            }
-
-        for (var i = 0; i < DrivePath.length-1; i++) {
-            line1 = new google.maps.Polyline({
-              path: [DrivePath[i], DrivePath[i+1]],
-              icons: [
-                {
-                  icon: symbolSource,
-                  offset: '0%'
-                }, {
-                  icon: symbolDestination,
-                  offset: '100%'
-                }
-              ],
-              strokeColor: Colors[i],
-              strokeOpacity: 1.0,
-              strokeWeight: 2,
-              map: map
-            });
-            lineArray1[i] = line1;
-          }
-
-            console.log(lineArray.length);
-            console.log(lineArray1.length);
+        console.log(lineArray.length);
+        console.log(lineArray1.length);
 
           //Map boundaries
           var bounds = new google.maps.LatLngBounds();
-            for (var i = 0; i < line.getPath().getLength(); i++) {
-              bounds.extend(line.getPath().getAt(i));
-            }
+          for (var i = 0; i < line.getPath().getLength(); i++) {
+            bounds.extend(line.getPath().getAt(i));
+          }
           map.fitBounds(bounds);
 
 
-        function playing() {
-              intervalForAnimation = window.setInterval(function() {
-                  $("#map").after(animateCircle(count));
-                  count = (count+0.2) % 200;
-              }, 20);
+          function playing() {
+            intervalForAnimation = window.setInterval(function() {
+              $("#map").after(animateCircle(count));
+              count = (count+0.2) % 200;
+            }, 20);
           }
 
           $(".play").click(function() {
-              playing();
-              marker.setMap(map);
-              motherShipLayer.setMap(map);
-              $(this).hide();
-              $(".pause").show();
+            playing();
+            marker.setMap(map);
+            motherShipLayer.setMap(map);
+            $(this).hide();
+            $(".pause").show();
           });
 
 
           $(".pause").click(function() {
-              clearInterval(intervalForAnimation);
-              $(this).hide();
-              $(".play").show();              
+            clearInterval(intervalForAnimation);
+            $(this).hide();
+            $(".play").show();              
           });
 
           $(".reset").click(function(){
-              count = 0;
-              motherShipLayer.setMap(map);
+            count = 0;
+            motherShipLayer.setMap(map);
             for(var i = 0; i < lineArray1.length; i++){
               line11 = lineArray1[i];
               line11.setMap(map);
@@ -529,21 +468,21 @@ $e_date = $_GET['e_date'];
           icons[0].offset = (count / 2) + '%';
           line10.set('icons', icons);
           $("#slider").slider("value", count);
-          }
-          if (count >= 199){ 
-            clearInterval(intervalForAnimation);
-            clearTheLines();
-            motherShipLayer.setMap(null);
-          };    
+        }
+        if (count >= 199){ 
+          clearInterval(intervalForAnimation);
+          clearTheLines();
+          motherShipLayer.setMap(null);
+        };    
       }
 
-        function clearTheLines(){
-            for(var i = 0; i < lineArray1.length; i++){
-              line11 = lineArray1[i];
-              line11.setMap(null);
-            }
+      function clearTheLines(){
+        for(var i = 0; i < lineArray1.length; i++){
+          line11 = lineArray1[i];
+          line11.setMap(null);
         }
-   
+      }
+      
 
     // Construct the circle for each value in citymap.
         // Note: We scale the area of the circle based on the population.
@@ -559,68 +498,40 @@ $e_date = $_GET['e_date'];
             radius: 500000
           });
 
-
-
-      
-
       // Remove custom styles.
       // map.data.setStyle({});  
       //....layering part finished....//   
 
       //....Marker section....//
-        var marker = new google.maps.Marker({
-          position:{lat: m_ship[0][1], lng: m_ship[0][2]},
-          icon: {
+      var marker = new google.maps.Marker({
+        position:{lat: m_ship[0][1], lng: m_ship[0][2]},
+        icon: {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 5 }
-          });
+        });
 
-        var infowindow = new google.maps.InfoWindow({
-          content:"Mother Ship"
-          });
+      var infowindow = new google.maps.InfoWindow({
+        content:"Mother Ship"
+      });
 
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map,marker);
-          });
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+      });
 
-}
-       
+    }
+    
 
-    </script>
-    <!--<script type="text/javascript">
-           var pb,map;
-
-          function start() {
-            myLatlng = new google.maps.LatLng(-25.363882,131.044922);
-            var myOptions = {
-                zoom: 4,
-                center: myLatlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-              }
-            map = new google.maps.Map(document.getElementById("map"), myOptions);
-            pb = new progressBar();
-            map.controls[google.maps.ControlPosition.RIGHT].push(pb.getDiv());
-            pb.start(200);
-          };
-
-          function updateBar() {
-            pb.updateBar(Math.ceil(Math.random()*10));
-          };
-
-          function hide() {
-            pb.hide();
-          };
-    </script>-->
-   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYJY_vFKIl-VEdyoEd3hZI8Wv1JdNzTmI&callback=initMap"></script>
-    <!--<script src="js/jquery.min.js"></script>-->
-    <script src="js/bootstrap.min.js"></script>
-    <script>
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYJY_vFKIl-VEdyoEd3hZI8Wv1JdNzTmI&callback=initMap"></script>
+  <!--<script src="js/jquery.min.js"></script>-->
+  <script src="js/bootstrap.min.js"></script>
+  <script>
     $(document).ready(function () {
-        $('.dropdown-toggle').dropdown();
+      $('.dropdown-toggle').dropdown();
     });
-    </script>
-    <script type="text/javascript">
+  </script>
+  <script type="text/javascript">
     function prepareNightMode(){
       if(document.getElementById("nightMode").checked){
         document.body.style.backgroundColor = "gray";
@@ -637,6 +548,6 @@ $e_date = $_GET['e_date'];
     window.onload = function(){
       setInterval(prepareNightMode,50);
     }
-    </script>
-  </body>
+  </script>
+</body>
 </html>
